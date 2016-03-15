@@ -1292,8 +1292,9 @@ static struct BeebKeyTrans SDLtoBeebEmKeymap[]={
 {SDLK_LSHIFT,		0,0},	// SHIFT
 {SDLK_RSHIFT,		0,0},	// SHIFT
 
-{SDLK_CAPSLOCK,		4,0},    // CAPS LOCK (Totally fucked up in SDL..)
-{SDLK_LSUPER,		4,0},	// CAPS LOCK (so Alt Gr is also CAPS-LOCK..)
+//{SDLK_CAPSLOCK,		4,0},    // CAPS LOCK (Totally fucked up in SDL..)
+//{SDLK_LSUPER,		4,0},	// CAPS LOCK (so Alt Gr is also CAPS-LOCK..)
+{SDLK_RALT,             4,0},   // use SDL right alt instead.
 
 {SDLK_ESCAPE,		7,0},    // ESCAPE
 {SDLK_SPACE,		6,2},    // SPACE
@@ -1359,7 +1360,7 @@ static struct BeebKeyTrans SDLtoBeebEmKeymap[]={
 {SDLK_COMMA,		6,6},	// "<" / ","
 {SDLK_EQUALS,		1,7},	// "=" / "-"
 {SDLK_PERIOD,		6,7},	// ">" / "."
-{SDLK_BACKQUOTE,	2,8},	// "-" / "£"
+{SDLK_BACKQUOTE,	2,8},	// "-" / "Â£"
 
 
 {SDLK_SEMICOLON,	4,7},	// "@"
