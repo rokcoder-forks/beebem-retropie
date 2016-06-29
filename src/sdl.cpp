@@ -41,10 +41,6 @@
 #include "beebem_pages.h"
 
 
-// Set ARCADE_CONTROLS to 1 to allow remapping to I-PAC2 style arcade controls (or set to 0 to disable remapping)
-#define ARCADE_CONTROLS 1
-
-
 // The SDL sound support code is nasty :-( 
 //
 // In order to handle sound without studying the BeebEm sound code in too much
@@ -1271,8 +1267,6 @@ unsigned char* GetSDLScreenLinePtr(int line)
 }
 
 
-#if ARCADE_CONTROLS
-
 // Remapping for arcade controls
 
 struct ArcadeControlsTrans {
@@ -1280,34 +1274,31 @@ struct ArcadeControlsTrans {
 	int toSym;
 };
 
-static struct ArcadeControlsTrans ArcadeToSDLKeymap[] = {
-	{ SDLK_LEFT, SDLK_z },
-	{ SDLK_RIGHT, SDLK_x },
-	{ SDLK_DOWN, SDLK_SLASH },
-	{ SDLK_UP, SDLK_QUOTE },
-	{ SDLK_1, SDLK_SPACE },
-	{ -1, -1 }
-};
+const int MAX_ARCADE_MAPPING = 32;
 
-//TODO - I need to load this in as a text file so it can be configured per game if required.  As such, I can't use SDL macros.  I need something along the lines of -
-//			{
-//				{ "left", SDLK_z },		// Player 1 left
-//				{ "right", SDLK_x },	// Player 1 right
-//				{ "up", SDLK_* },		// Player 1 up
-//				{ "down", SDLK_? },		// Player 1 down
-//				{ "1", SDLK_SPACE },	// Player 1 start
-//			}
+static struct ArcadeControlsTrans ArcadeToSDLKeymap[MAX_ARCADE_MAPPING];
+static int ArcadeControlsDefined = 0;
+
+void AddArcadeMapping( int k1, int k2 )
+{
+	if( ArcadeControlsDefined == MAX_ARCADE_MAPPING )
+	{
+		return;
+	}
+	
+	ArcadeToSDLKeymap[ArcadeControlsDefined].fromSym = k1;
+	ArcadeToSDLKeymap[ArcadeControlsDefined].toSym = k2;
+	ArcadeControlsDefined++
+}
 
 int ConvertArcadeControlsToSDL( int keysym )
 {
 	struct ArcadeControlsTrans *p = ArcadeToSDLKeymap;
 
-	for( ; p->fromSym != -1 && p->fromSym != keysym; p++ );
+	for( int count = ArcadeControlsDefined; count > 0 && p->fromSym != keysym; p++, count-- );
 	
-	return p->fromSym == -1 ? keysym : p->toSym;	
+	return count == 0 ? keysym : p->toSym;	
 }
-
-#endif // ARCADE_CONTROLS
 
 
 /* Converts an SDL key into a BBC key.
@@ -1441,9 +1432,7 @@ static struct BeebKeyTrans SDLtoBeebEmKeymap[]={
 int ConvertSDLKeyToBBCKey(SDL_keysym keysym /*, int *pressed */, int *col
  , int *row)
 {
-#if ARCADE_CONTROLS
 	int sym = ConvertArcadeControlsToSDL( keysym.sym );
-#endif
 
 //	int bsymwaspressed;
 //	Uint8 *keystate;
@@ -1455,11 +1444,7 @@ int ConvertSDLKeyToBBCKey(SDL_keysym keysym /*, int *pressed */, int *col
 //	bsymwaspressed = keystate[keysym.sym];
 
 	// Now we can convert this key into a BBC scancode:
-#if ARCADE_CONTROLS
 	for(;((p->row != -1) && (p->sym != sym));p++);
-#else
-	for(;((p->row != -1) && (p->sym != keysym.sym));p++);
-#endif
 	// Map the key pressed. If not matched sets as -1, -1
 	*(row) = p->row;
 	*(col) = p->col;

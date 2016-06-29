@@ -5669,7 +5669,7 @@ void BeebWin::ParseCommandLine()
 		++i;
 	}
 }
-	
+
 /*****************************************************************************/
 // Handle a file name passed on command line
 	
@@ -5823,6 +5823,126 @@ void BeebWin::HandleCommandLineFile()
 		}
 	}
 
+	if( cont )
+	{
+		std::map<std::string, int> toSDL =
+		{
+			{ "tab", SDLK_TAB },
+			{ "return", SDLK_RETURN },
+			{ "lctrl", SDLK_LTRL },
+			{ "rctrl", SDLK_RCTRL },
+			{ "lshift", SDLK_LSHIFT },
+			{ "rshift", SDLK_RSHIFT },
+			{ "ralt", SDLK_RALT },
+			{ "esc", SDLK_ESCAPE },
+			{ "space", SDLK_SPACE },
+			{ "left", SDLK_LEFT },
+			{ "up", SDLK_UP },
+			{ "right", SDLK_RIGHT },
+			{ "down", SDLK_DOWN },
+			{ "del", SDLK_DELETE },
+			{ "back", SDLK_BACKSPACE },
+			{ "ins", SDLK_INSERT },
+			{ "0", SDLK_0 },
+			{ "1", SDLK_1 },
+			{ "2", SDLK_2 },
+			{ "3", SDLK_3 },
+			{ "4", SDLK_4 },
+			{ "5", SDLK_5 },
+			{ "6", SDLK_6 },
+			{ "7", SDLK_7 },
+			{ "8", SDLK_8 },
+			{ "9", SDLK_9 },
+			{ "a", SDLK_a },
+			{ "b", SDLK_b },
+			{ "c", SDLK_c },
+			{ "d", SDLK_d },
+			{ "e", SDLK_e },
+			{ "f", SDLK_f },
+			{ "g", SDLK_g },
+			{ "h", SDLK_h },
+			{ "i", SDLK_i },
+			{ "j", SDLK_j },
+			{ "k", SDLK_k },
+			{ "l", SDLK_l },
+			{ "m", SDLK_m },
+			{ "n", SDLK_n },
+			{ "o", SDLK_o },
+			{ "p", SDLK_p },
+			{ "q", SDLK_q },
+			{ "r", SDLK_r },
+			{ "s", SDLK_s },
+			{ "t", SDLK_t },
+			{ "u", SDLK_u },
+			{ "v", SDLK_v },
+			{ "w", SDLK_w },
+			{ "x", SDLK_x },
+			{ "y", SDLK_y },
+			{ "z", SDLK_z },
+			{ "f0", SDLK_F0 },
+			{ "f1", SDLK_F1 },
+			{ "f2", SDLK_F2 },
+			{ "f3", SDLK_F3 },
+			{ "f4", SDLK_F4 },
+			{ "f5", SDLK_F5 },
+			{ "f6", SDLK_F6 },
+			{ "f7", SDLK_F7 },
+			{ "f8", SDLK_F8 },
+			{ "f9", SDLK_F9 }
+		};
+
+		char mapfile[256];
+		char line[256];
+		strcpy( mapfile, filename );
+		strcpy( mapfile + strlen( mapfile ) - 3, "map" );
+		FILE* fp = fopen( mapfile, "r" );
+		if( fp != NULL )
+		{
+			std::map<std::string, std::string> mapDefines;
+			
+			while( fgets( line, 256, fp ) != NULL )
+			{
+				char* token = strtok( line, " " );
+				if( !strcmp( token, "define" ))
+				{
+					char* def1 = strtok( NULL, " " );
+					char* def2 = strtok( NULL, " " );
+					
+					if( def1 != NULL && def2 != NULL )
+					{
+						std::string d1( def1 );
+						std::string d2( def2 );
+
+						mapDefines.insert( d1, d2 );
+					}
+				}
+				else if( !strcmp( token, "map" ))
+				{
+					char* def1 = strtok( NULL, " " );
+					char* def2 = strtok( NULL, " " );
+
+					if( def1 != NULL && def2 != NULL )
+					{
+						std::string d1( def1 );
+						std::string d2( def2 );
+						
+						if( mapDefines.find( def1 ) != mapDefines.end( ))
+						{
+							d1 = mapDefines[def1];
+						}
+						
+						if( toSDL.fine( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
+						{
+							AddArcadeMapping( toSDL( d1 ), toSDL( d2 ));
+						}
+					}
+				}
+				
+				fclose( fp );
+			}
+		}
+	}
+	
 	if (cont)
 	{
 		// Do a shift + break
