@@ -70,6 +70,8 @@
 #include "beebem_pages.h"
 //<+
 
+#include <map>
+
 // some LED based macros
 
 #define LED_COLOUR_TYPE (LEDByte&4)>>2
