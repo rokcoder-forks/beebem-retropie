@@ -5888,7 +5888,7 @@ void BeebWin::HandleCommandLineFile()
 			{ "f6", SDLK_F6 },
 			{ "f7", SDLK_F7 },
 			{ "f8", SDLK_F8 },
-			{ "f9", SDLK_F9 }
+			{ "f9", SDLK_F9 },
 			
 			// A lot of the following are guesses!
 			
@@ -5904,7 +5904,7 @@ void BeebWin::HandleCommandLineFile()
 			// {SDLK_PAUSE,		-2,-2},	// BREAK
 			{ "[", SDLK_LEFTBRACKET },
 			{ "]", SDLK_RIGHTBRACKET },
-			{ "\", SDLK_BACKSLASH },
+			{ "\\", SDLK_BACKSLASH }
 		};
 
 		char mapfile[256];
@@ -5921,21 +5921,21 @@ void BeebWin::HandleCommandLineFile()
 				char* token = strtok( line, " " );
 				if( !strcmp( token, "define" ))
 				{
-					char* def1 = strtok( NULL, " " );
-					char* def2 = strtok( NULL, " " );
+					char* def1 = strtok( NULL, " \n\r" );
+					char* def2 = strtok( NULL, " \n\r" );
 					
 					if( def1 != NULL && def2 != NULL )
 					{
 						std::string d1( def1 );
 						std::string d2( def2 );
 
-						mapDefines.insert( d1, d2 );
+						mapDefines[d1] = d2;
 					}
 				}
 				else if( !strcmp( token, "map" ))
 				{
-					char* def1 = strtok( NULL, " " );
-					char* def2 = strtok( NULL, " " );
+					char* def1 = strtok( NULL, " \n\r" );
+					char* def2 = strtok( NULL, " \n\r" );
 
 					if( def1 != NULL && def2 != NULL )
 					{
@@ -5949,13 +5949,12 @@ void BeebWin::HandleCommandLineFile()
 						
 						if( toSDL.find( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
 						{
-							AddArcadeMapping( toSDL( d1 ), toSDL( d2 ));
+							AddArcadeMapping( toSDL[d1], toSDL[d2]);
 						}
 					}
 				}
-				
-				fclose( fp );
 			}
+			fclose( fp );
 		}
 	}
 	
