@@ -1286,6 +1286,14 @@ void AddArcadeMapping( int k1, int k2 )
 		return;
 	}
 	
+	for( int i = 0; i < ArcadeControlsDefined; i++ )
+	{
+		if( ArcadeControlsTrans[i].fromSym == k1 || ArcadeControlsTrans[i].toSym == k2 )
+		{
+			return;
+		}
+	}
+	
 	ArcadeToSDLKeymap[ArcadeControlsDefined].fromSym = k1;
 	ArcadeToSDLKeymap[ArcadeControlsDefined].toSym = k2;
 	ArcadeControlsDefined++
