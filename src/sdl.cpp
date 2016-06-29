@@ -1300,7 +1300,7 @@ static struct ArcadeControlsTrans ArcadeToSDLKeymap[] = {
 
 int ConvertArcadeControlsToSDL( int keysym )
 {
-	struct ArcadeControlTrans *p = ArcadeToSDLKeymap;
+	struct ArcadeControlsTrans *p = ArcadeToSDLKeymap;
 
 	for( ; p->fromSym != -1 && p->fromSym != keysym; p++ );
 	
