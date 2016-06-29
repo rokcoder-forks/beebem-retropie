@@ -5920,77 +5920,48 @@ void BeebWin::HandleCommandLineFile()
 			
 			while( fgets( line, 256, fp ) != NULL )
 			{
-				FILE*f1 = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-				if(f1 != NULL)
+				char* token = strtok( line, " \n\r" );
+				
+				if( token != NULL )
 				{
-					fprintf(f1, "Read line %s\n", line);
-					fclose(f1);
-				}
-
-				char* token = strtok( line, " " );
-				FILE*f2 = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-				if(f2 != NULL)
-				{
-					fprintf(f2, "Token %s\n", token);
-					fclose(f2);
-				}
-				if( !strcmp( token, "define" ))
-				{
-					char* def1 = strtok( NULL, " \n\r" );
-					char* def2 = strtok( NULL, " \n\r" );
-					
-					if( def1 != NULL && def2 != NULL )
+					if( !strcmp( token, "define" ))
 					{
-						std::string d1( def1 );
-						std::string d2( def2 );
-
-						mapDefines[d1] = d2;
-					}
-				}
-				else if( !strcmp( token, "map" ))
-				{
-					char* def1 = strtok( NULL, " \n\r" );
-					char* def2 = strtok( NULL, " \n\r" );
-
-					if( def1 != NULL && def2 != NULL )
-					{
-						std::string d1( def1 );
-						std::string d2( def2 );
+						char* def1 = strtok( NULL, " \n\r" );
+						char* def2 = strtok( NULL, " \n\r" );
 						
-						if( mapDefines.find( def1 ) != mapDefines.end( ))
+						if( def1 != NULL && def2 != NULL )
 						{
-							d1 = mapDefines[def1];
+							std::string d1( def1 );
+							std::string d2( def2 );
+
+							mapDefines[d1] = d2;
 						}
-						
-						if( toSDL.find( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
+					}
+					else if( !strcmp( token, "map" ))
+					{
+						char* def1 = strtok( NULL, " \n\r" );
+						char* def2 = strtok( NULL, " \n\r" );
+
+						if( def1 != NULL && def2 != NULL )
 						{
-							FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-							if(ff != NULL)
+							std::string d1( def1 );
+							std::string d2( def2 );
+							
+							if( mapDefines.find( def1 ) != mapDefines.end( ))
 							{
-								fprintf(ff, "Mapping %i to %i\n", toSDL[d1], toSDL[d2]);
-								fclose(ff);
+								d1 = mapDefines[def1];
 							}
-
-							AddArcadeMapping( toSDL[d1], toSDL[d2]);
+							
+							if( toSDL.find( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
+							{
+								AddArcadeMapping( toSDL[d1], toSDL[d2]);
+							}
 						}
 					}
 				}
-			}
-			FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-			if(ff != NULL)
-			{
-				fprintf(ff, "About to close\n");
-				fclose(ff);
 			}
 
 			fclose( fp );
-
-			ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-			if(ff != NULL)
-			{
-				fprintf(ff, "Closed\n");
-				fclose(ff);
-			}
 		}
 	}
 	
