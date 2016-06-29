@@ -5879,7 +5879,7 @@ void BeebWin::HandleCommandLineFile()
 			{ "x", SDLK_x },
 			{ "y", SDLK_y },
 			{ "z", SDLK_z },
-			{ "f0", SDLK_F0 },
+			{ "f10", SDLK_F10 },
 			{ "f1", SDLK_F1 },
 			{ "f2", SDLK_F2 },
 			{ "f3", SDLK_F3 },
@@ -5889,6 +5889,22 @@ void BeebWin::HandleCommandLineFile()
 			{ "f7", SDLK_F7 },
 			{ "f8", SDLK_F8 },
 			{ "f9", SDLK_F9 }
+			
+			// A lot of the following are guesses!
+			
+			{ "-", SDLK_MINUS },
+			{ ",", SDLK_COMMA },
+			{ "_", SDLK_EQUALS },
+			{ ".", SDLK_PERIOD },
+			{ "#", SDLK_BACKQUOTE },
+			{ "@", SDLK_SEMICOLON },
+			{ "'", SDLK_QUOTE },
+			{ "/", SDLK_SLASH },
+			{ "=", SDLK_HASH },
+			// {SDLK_PAUSE,		-2,-2},	// BREAK
+			{ "[", SDLK_LEFTBRACKET },
+			{ "]", SDLK_RIGHTBRACKET },
+			{ "\", SDLK_BACKSLASH },
 		};
 
 		char mapfile[256];
