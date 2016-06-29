@@ -5828,87 +5828,86 @@ void BeebWin::HandleCommandLineFile()
 
 	if( cont )
 	{
-		std::map<std::string, int> toSDL =
-		{
-			{ "tab", SDLK_TAB },
-			{ "return", SDLK_RETURN },
-			{ "lctrl", SDLK_LCTRL },
-			{ "rctrl", SDLK_RCTRL },
-			{ "lshift", SDLK_LSHIFT },
-			{ "rshift", SDLK_RSHIFT },
-			{ "ralt", SDLK_RALT },
-			{ "esc", SDLK_ESCAPE },
-			{ "space", SDLK_SPACE },
-			{ "left", SDLK_LEFT },
-			{ "up", SDLK_UP },
-			{ "right", SDLK_RIGHT },
-			{ "down", SDLK_DOWN },
-			{ "del", SDLK_DELETE },
-			{ "back", SDLK_BACKSPACE },
-			{ "ins", SDLK_INSERT },
-			{ "0", SDLK_0 },
-			{ "1", SDLK_1 },
-			{ "2", SDLK_2 },
-			{ "3", SDLK_3 },
-			{ "4", SDLK_4 },
-			{ "5", SDLK_5 },
-			{ "6", SDLK_6 },
-			{ "7", SDLK_7 },
-			{ "8", SDLK_8 },
-			{ "9", SDLK_9 },
-			{ "a", SDLK_a },
-			{ "b", SDLK_b },
-			{ "c", SDLK_c },
-			{ "d", SDLK_d },
-			{ "e", SDLK_e },
-			{ "f", SDLK_f },
-			{ "g", SDLK_g },
-			{ "h", SDLK_h },
-			{ "i", SDLK_i },
-			{ "j", SDLK_j },
-			{ "k", SDLK_k },
-			{ "l", SDLK_l },
-			{ "m", SDLK_m },
-			{ "n", SDLK_n },
-			{ "o", SDLK_o },
-			{ "p", SDLK_p },
-			{ "q", SDLK_q },
-			{ "r", SDLK_r },
-			{ "s", SDLK_s },
-			{ "t", SDLK_t },
-			{ "u", SDLK_u },
-			{ "v", SDLK_v },
-			{ "w", SDLK_w },
-			{ "x", SDLK_x },
-			{ "y", SDLK_y },
-			{ "z", SDLK_z },
-			{ "f10", SDLK_F10 },
-			{ "f1", SDLK_F1 },
-			{ "f2", SDLK_F2 },
-			{ "f3", SDLK_F3 },
-			{ "f4", SDLK_F4 },
-			{ "f5", SDLK_F5 },
-			{ "f6", SDLK_F6 },
-			{ "f7", SDLK_F7 },
-			{ "f8", SDLK_F8 },
-			{ "f9", SDLK_F9 },
-			
-			// A lot of the following are guesses!
-			
-			{ "-", SDLK_MINUS },
-			{ ",", SDLK_COMMA },
-			{ "_", SDLK_EQUALS },
-			{ ".", SDLK_PERIOD },
-			{ "#", SDLK_BACKQUOTE },
-			{ "@", SDLK_SEMICOLON },
-			{ "'", SDLK_QUOTE },
-			{ "/", SDLK_SLASH },
-			{ "=", SDLK_HASH },
-			// {SDLK_PAUSE,		-2,-2},	// BREAK
-			{ "[", SDLK_LEFTBRACKET },
-			{ "]", SDLK_RIGHTBRACKET },
-			{ "\\", SDLK_BACKSLASH }
-		};
+		std::map<std::string, int> toSDL;
+
+		toSDL["tab"] = SDLK_TAB;
+		toSDL["return"] = SDLK_RETURN;
+		toSDL["lctrl"] = SDLK_LCTRL;
+		toSDL["rctrl"] = SDLK_RCTRL;
+		toSDL["lshift"] = SDLK_LSHIFT;
+		toSDL["rshift"] = SDLK_RSHIFT;
+		toSDL["ralt"] = SDLK_RALT;
+		toSDL["esc"] = SDLK_ESCAPE;
+		toSDL["space"] = SDLK_SPACE;
+		toSDL["left"] = SDLK_LEFT;
+		toSDL["up"] = SDLK_UP;
+		toSDL["right"] = SDLK_RIGHT;
+		toSDL["down"] = SDLK_DOWN;
+		toSDL["del"] = SDLK_DELETE;
+		toSDL["back"] = SDLK_BACKSPACE;
+		toSDL["ins"] = SDLK_INSERT;
+		toSDL["0"] = SDLK_0;
+		toSDL["1"] = SDLK_1;
+		toSDL["2"] = SDLK_2;
+		toSDL["3"] = SDLK_3;
+		toSDL["4"] = SDLK_4;
+		toSDL["5"] = SDLK_5;
+		toSDL["6"] = SDLK_6;
+		toSDL["7"] = SDLK_7;
+		toSDL["8"] = SDLK_8;
+		toSDL["9"] = SDLK_9;
+		toSDL["a"] = SDLK_a;
+		toSDL["b"] = SDLK_b;
+		toSDL["c"] = SDLK_c;
+		toSDL["d"] = SDLK_d;
+		toSDL["e"] = SDLK_e;
+		toSDL["f"] = SDLK_f;
+		toSDL["g"] = SDLK_g;
+		toSDL["h"] = SDLK_h;
+		toSDL["i"] = SDLK_i;
+		toSDL["j"] = SDLK_j;
+		toSDL["k"] = SDLK_k;
+		toSDL["l"] = SDLK_l;
+		toSDL["m"] = SDLK_m;
+		toSDL["n"] = SDLK_n;
+		toSDL["o"] = SDLK_o;
+		toSDL["p"] = SDLK_p;
+		toSDL["q"] = SDLK_q;
+		toSDL["r"] = SDLK_r;
+		toSDL["s"] = SDLK_s;
+		toSDL["t"] = SDLK_t;
+		toSDL["u"] = SDLK_u;
+		toSDL["v"] = SDLK_v;
+		toSDL["w"] = SDLK_w;
+		toSDL["x"] = SDLK_x;
+		toSDL["y"] = SDLK_y;
+		toSDL["z"] = SDLK_z;
+		toSDL["f10"] = SDLK_F10;
+		toSDL["f1"] = SDLK_F1;
+		toSDL["f2"] = SDLK_F2;
+		toSDL["f3"] = SDLK_F3;
+		toSDL["f4"] = SDLK_F4;
+		toSDL["f5"] = SDLK_F5;
+		toSDL["f6"] = SDLK_F6;
+		toSDL["f7"] = SDLK_F7;
+		toSDL["f8"] = SDLK_F8;
+		toSDL["f9"] = SDLK_F9;
+		
+		// A lot of the following are guesses!
+		
+		toSDL["-"] = SDLK_MINUS;
+		toSDL[","] = SDLK_COMMA;
+		toSDL["_"] = SDLK_EQUALS;
+		toSDL["."] = SDLK_PERIOD;
+		toSDL["#"] = SDLK_BACKQUOTE;
+		toSDL["@"] = SDLK_SEMICOLON;
+		toSDL["'"] = SDLK_QUOTE;
+		toSDL["/"] = SDLK_SLASH;
+		toSDL["="] = SDLK_HASH;
+		// {SDLK_PAUSE,		-2,-2},	// BREAK
+		toSDL["["] = SDLK_LEFTBRACKET;
+		toSDL["]"] = SDLK_RIGHTBRACKET;
+		toSDL["\\"] = SDLK_BACKSLASH;
 
 		char mapfile[256];
 		char line[256];
