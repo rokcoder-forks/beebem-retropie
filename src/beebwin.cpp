@@ -5920,7 +5920,20 @@ void BeebWin::HandleCommandLineFile()
 			
 			while( fgets( line, 256, fp ) != NULL )
 			{
+				FILE*f1 = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+				if(f1 != NULL)
+				{
+					fprintf(f1, "Read line %s\n", line);
+					fclose(f1);
+				}
+
 				char* token = strtok( line, " " );
+				FILE*f2 = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+				if(f2 != NULL)
+				{
+					fprintf(f2, "Token %s\n", token);
+					fclose(f2);
+				}
 				if( !strcmp( token, "define" ))
 				{
 					char* def1 = strtok( NULL, " \n\r" );
