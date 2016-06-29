@@ -71,6 +71,7 @@
 //<+
 
 #include <map>
+#include <string>
 
 // some LED based macros
 
@@ -5831,7 +5832,7 @@ void BeebWin::HandleCommandLineFile()
 		{
 			{ "tab", SDLK_TAB },
 			{ "return", SDLK_RETURN },
-			{ "lctrl", SDLK_LTRL },
+			{ "lctrl", SDLK_LCTRL },
 			{ "rctrl", SDLK_RCTRL },
 			{ "lshift", SDLK_LSHIFT },
 			{ "rshift", SDLK_RSHIFT },
@@ -5911,7 +5912,7 @@ void BeebWin::HandleCommandLineFile()
 
 		char mapfile[256];
 		char line[256];
-		strcpy( mapfile, filename );
+		strcpy( mapfile, FileName );
 		strcpy( mapfile + strlen( mapfile ) - 3, "map" );
 		FILE* fp = fopen( mapfile, "r" );
 		if( fp != NULL )
