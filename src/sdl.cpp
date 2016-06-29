@@ -1283,8 +1283,8 @@ struct ArcadeControlsTrans {
 static struct ArcadeControlsTrans ArcadeToSDLKeymap[] = {
 	{ SDLK_LEFT, SDLK_z },
 	{ SDLK_RIGHT, SDLK_x },
-	{ SDLK_DOWN, SDLK_? },
-	{ SDLK_UP, SDLK_* },
+	{ SDLK_DOWN, SDLK_SLASH },
+	{ SDLK_UP, SDLK_QUOTE },
 	{ SDLK_1, SDLK_SPACE },
 	{ -1, -1 }
 };
@@ -1304,12 +1304,7 @@ int ConvertArcadeControlsToSDL( int keysym )
 
 	for( ; p->fromSym != -1 && p->fromSym != keysym; p++ );
 	
-	if( p->fromSym == -1 )
-	{
-		return keysym;
-	}
-
-	return p->toSym;	
+	return p->fromSym == -1 ? keysym : p->toSym;	
 }
 
 #endif // ARCADE_CONTROLS
