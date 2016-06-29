@@ -5947,7 +5947,7 @@ void BeebWin::HandleCommandLineFile()
 							d1 = mapDefines[def1];
 						}
 						
-						if( toSDL.fine( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
+						if( toSDL.find( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
 						{
 							AddArcadeMapping( toSDL( d1 ), toSDL( d2 ));
 						}
