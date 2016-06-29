@@ -169,5 +169,6 @@ void FreeSDLSound(void);
 //static EG_BOOL EG_DrawString_Initialise(void);
 //static void EG_DrawString_Free(void);
 
+void AddArcadeMapping( int d1, int d2 );
 
 #endif
