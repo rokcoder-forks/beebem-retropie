@@ -1304,7 +1304,12 @@ int ConvertArcadeControlsToSDL( int keysym )
 
 	for( ; p->fromSym != -1 && p->fromSym != keysym; p++ );
 	
-	return p->fromSym == -1 ? keysym : p->toSym;	
+	if( p->fromSym == -1 )
+	{
+		return keysym;
+	}
+
+	return p->toSym;	
 }
 
 #endif // ARCADE_CONTROLS
