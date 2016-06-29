@@ -5963,7 +5963,21 @@ void BeebWin::HandleCommandLineFile()
 					}
 				}
 			}
+			FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+			if(ff != NULL)
+			{
+				fprintf(ff, "About to close\n");
+				fclose(ff);
+			}
+
 			fclose( fp );
+
+			ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+			if(ff != NULL)
+			{
+				fprintf(ff, "Closed\n");
+				fclose(ff);
+			}
 		}
 	}
 	
@@ -5974,6 +5988,13 @@ void BeebWin::HandleCommandLineFile()
 		ResetBeebSystem(MachineType,TubeEnabled,0);
 		BeebKeyDown(0, 0); // Shift key
 		m_ShiftBooted = true;
+	}
+
+	FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+	if(ff != NULL)
+	{
+		fprintf(ff, "End of function\n");
+		fclose(ff);
 	}
 }
 
