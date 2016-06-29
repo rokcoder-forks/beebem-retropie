@@ -41,6 +41,9 @@
 #include "beebem_pages.h"
 
 
+// Set ARCADE_CONTROLS to 1 to allow remapping to I-PAC2 style arcade controls (or set to 0 to disable remapping)
+#define ARCADE_CONTROLS 1
+
 
 // The SDL sound support code is nasty :-( 
 //
@@ -1268,6 +1271,45 @@ unsigned char* GetSDLScreenLinePtr(int line)
 }
 
 
+#if ARCADE_CONTROLS
+
+// Remapping for arcade controls
+
+struct ArcadeControlsTrans {
+	int fromSym;
+	int toSym;
+};
+
+static struct ArcadeControlsTrans ArcadeToSDLKeymap[] = {
+	{ SDLK_LEFT, SDLK_z },
+	{ SDLK_RIGHT, SDLK_x },
+	{ SDLK_DOWN, SDLK_? },
+	{ SDLK_UP, SDLK_* },
+	{ SDLK_1, SDLK_SPACE },
+	{ -1, -1 }
+};
+
+//TODO - I need to load this in as a text file so it can be configured per game if required.  As such, I can't use SDL macros.  I need something along the lines of -
+//			{
+//				{ "left", SDLK_z },		// Player 1 left
+//				{ "right", SDLK_x },	// Player 1 right
+//				{ "up", SDLK_* },		// Player 1 up
+//				{ "down", SDLK_? },		// Player 1 down
+//				{ "1", SDLK_SPACE },	// Player 1 start
+//			}
+
+int ConvertArcadeControlsToSDL( int keysym )
+{
+	struct ArcadeControlTrans *p = ArcadeToSDLKeymap;
+
+	for( ; p->fromSym != -1 && p->fromSym != keysym; p++ );
+	
+	return p->fromSym == -1 ? keysym : p->toSym;	
+}
+
+#endif // ARCADE_CONTROLS
+
+
 /* Converts an SDL key into a BBC key.
  *
  */
@@ -1399,6 +1441,10 @@ static struct BeebKeyTrans SDLtoBeebEmKeymap[]={
 int ConvertSDLKeyToBBCKey(SDL_keysym keysym /*, int *pressed */, int *col
  , int *row)
 {
+#if ARCADE_CONTROLS
+	int sym = ConvertArcadeControlsToSDL( keysym );
+#endif
+
 //	int bsymwaspressed;
 //	Uint8 *keystate;
 	struct BeebKeyTrans *p = SDLtoBeebEmKeymap;
@@ -1409,8 +1455,11 @@ int ConvertSDLKeyToBBCKey(SDL_keysym keysym /*, int *pressed */, int *col
 //	bsymwaspressed = keystate[keysym.sym];
 
 	// Now we can convert this key into a BBC scancode:
+#if ARCADE_CONTROLS
+	for(;((p->row != -1) && (p->sym != sym));p++);
+#else
 	for(;((p->row != -1) && (p->sym != keysym.sym));p++);
-
+#endif
 	// Map the key pressed. If not matched sets as -1, -1
 	*(row) = p->row;
 	*(col) = p->col;
