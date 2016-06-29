@@ -1302,8 +1302,9 @@ void AddArcadeMapping( int k1, int k2 )
 int ConvertArcadeControlsToSDL( int keysym )
 {
 	struct ArcadeControlsTrans *p = ArcadeToSDLKeymap;
-
-	for( int count = ArcadeControlsDefined; count > 0 && p->fromSym != keysym; p++, count-- );
+	int count = ArcadeControlsDefined;
+	
+	for( ; count > 0 && p->fromSym != keysym; p++, count-- );
 	
 	return count == 0 ? keysym : p->toSym;	
 }
