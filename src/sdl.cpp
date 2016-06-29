@@ -1442,7 +1442,7 @@ int ConvertSDLKeyToBBCKey(SDL_keysym keysym /*, int *pressed */, int *col
  , int *row)
 {
 #if ARCADE_CONTROLS
-	int sym = ConvertArcadeControlsToSDL( keysym );
+	int sym = ConvertArcadeControlsToSDL( keysym.sym );
 #endif
 
 //	int bsymwaspressed;
