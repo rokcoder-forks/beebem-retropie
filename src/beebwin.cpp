@@ -5951,6 +5951,13 @@ void BeebWin::HandleCommandLineFile()
 						
 						if( toSDL.find( d1 ) != toSDL.end( ) && toSDL.find( d2 ) != toSDL.end( ))
 						{
+							FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
+							if(ff != NULL)
+							{
+								fprintf(ff, "Mapping %i to %i\n", toSDL[d1], toSDL[d2]);
+								fclose(ff);
+							}
+
 							AddArcadeMapping( toSDL[d1], toSDL[d2]);
 						}
 					}

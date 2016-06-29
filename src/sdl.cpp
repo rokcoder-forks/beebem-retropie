@@ -1307,8 +1307,11 @@ int ConvertArcadeControlsToSDL( int keysym )
 	for( ; count > 0 && p->fromSym != keysym; p++, count-- );
 	
 	FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-	fprintf(ff, "Converting %i to %i\n", keysym, count == 0 ? keysym : p->toSym);
-	fclose(ff);
+	if(ff!=NULL)
+	{
+		fprintf(ff, "Converting %i to %i\n", keysym, count == 0 ? keysym : p->toSym);
+		fclose(ff);
+	}
 
 	return count == 0 ? keysym : p->toSym;	
 }
