@@ -5836,6 +5836,7 @@ void BeebWin::HandleCommandLineFile()
 		toSDL["rctrl"] = SDLK_RCTRL;
 		toSDL["lshift"] = SDLK_LSHIFT;
 		toSDL["rshift"] = SDLK_RSHIFT;
+		toSDL["lalt"] = SDLK_LALT;
 		toSDL["ralt"] = SDLK_RALT;
 		toSDL["esc"] = SDLK_ESCAPE;
 		toSDL["space"] = SDLK_SPACE;
