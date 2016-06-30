@@ -5973,13 +5973,6 @@ void BeebWin::HandleCommandLineFile()
 		BeebKeyDown(0, 0); // Shift key
 		m_ShiftBooted = true;
 	}
-
-	FILE*ff = fopen("/home/pi/RetroPie/roms/bbcmicro/debug.txt", "a");
-	if(ff != NULL)
-	{
-		fprintf(ff, "End of function\n");
-		fclose(ff);
-	}
 }
 
 /****************************************************************************/
